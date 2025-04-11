@@ -10,18 +10,18 @@
   <div class="spinner"></div>
 </div>
 
-
-    <header>
+<header>
         <nav>
             <div class="logo">Recipe Finder</div>
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Search</a></li>
-                <li><a href="#">Add Recipe</a></li>
-                <li><button class="dark-toggle" onclick="toggleDarkMode()">🌓</button></li>
+                <li><a href="index.php">Home 🏠</a></li>
+                <li><a href="search.php">Search 🔎</a></li>
+                <li><a href="#add-recipe">Add Recipe ➕</a></li>
+                <li><button class="dark-toggle" onclick="toggleDarkMode()">🌙</button></li>
             </ul>
         </nav>
     </header>
+
 
     <section class="hero">
         <h1 class="animated-title">Welcome to Recipe Finder 🍽️</h1>
@@ -49,18 +49,14 @@
         ?>
     </section>
 
-    <section class="custom-add">
+
+    <section class="custom-add" id="add-recipe">
         <h2>Want to share your own recipe?</h2>
         <a class="add-btn" href="add_recipe.php">Add Your Recipe</a>
     </section>
 
-    <footer>
-        <p>&copy; 2025 Recipe Finder | Follow us on 
-            <a href="#">Instagram</a> | 
-            <a href="#">LinkedIn</a>
-        </p>
-    </footer>
-
+    <?php include('includes/footer.php'); ?>
+    
     <script>
 
     window.addEventListener("load", () => {
