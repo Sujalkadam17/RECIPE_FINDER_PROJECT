@@ -1,13 +1,15 @@
 <?php include('includes/db.php'); ?>
 <?php include('includes/header.php'); ?>
-
+<body class="recipe-body">
+    
 <div class="container animate-fade-in">
 
 <?php
 // For single recipe view
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id = $_GET['id'];
-    $sql = "SELECT * FROM recipes WHERE id = $id"; 
+    $sql ="SELECT id, title, ingredients, instructions, video_url FROM recipes WHERE id = $id";
+
     $result = mysqli_query($conn, $sql);
 
     if ($result && mysqli_num_rows($result) > 0) {
@@ -15,11 +17,29 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         ?>
         <h1 class="recipe-title"><?= htmlspecialchars($recipe['title']) ?></h1>
 
-        <?php if (!empty($recipe['image'])): ?>
-            <img src="<?= htmlspecialchars($recipe['image']) ?>" class="recipe-image" alt="Recipe Image">
-        <?php else: ?>
-            <img src="assets/images/placeholder.png" class="recipe-image" alt="Default Recipe Image">
-        <?php endif; ?>
+
+        <?php
+        // Function to convert YouTube URL to embed URL
+function convertToEmbedUrl($url) {
+    if (strpos($url, 'watch?v=') !== false) {
+        return preg_replace("/watch\?v=([a-zA-Z0-9_-]+)/", "embed/$1", $url);
+    }
+    return $url;
+}
+$videoEmbedUrl = convertToEmbedUrl($recipe['video_url']);
+?>
+
+        <?php if (!empty($recipe['video_url'])): ?>
+    <div class="section">
+        <h2 class="section-heading">🎥 Video Tutorial</h2>
+        <div class="video-container">
+        <iframe width="100%" height="315" src="<?= htmlspecialchars($videoEmbedUrl) ?>"
+        frameborder="0" allowfullscreen></iframe>
+
+        </div>
+    </div>
+<?php endif; ?>
+
 
         <div class="section">
             <h2 class="section-heading">📝 Ingredients</h2>
@@ -70,5 +90,5 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 ?>
 </div>
 
-
+</body>
 <?php include('includes/footer.php'); ?>
